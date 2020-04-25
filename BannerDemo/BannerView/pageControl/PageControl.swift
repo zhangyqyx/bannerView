@@ -188,6 +188,12 @@ class PageControl: UIPageControl {
         }
         if self.pageType == .sizeDot {
             self.addSubview(self.loopPageView)
+            self.loopPageView.normalColor = self.normalColor
+            self.loopPageView.selectColor = self.selectColor
+            self.loopPageView.directionType = self.directionType
+            self.loopPageView.pageMargin = self.pageMargin
+            self.loopPageView.height = self.pointHeight
+            self.loopPageView.selectWidth = self.selectWidth
             self.loopPageView.pages = self.totalPages
             return
         }
@@ -249,7 +255,13 @@ class PageControl: UIPageControl {
     private func setupCurrentIndex(oldValue:Int) {
         if self.pageType == .sizeDot {
             self.addSubview(self.loopPageView)
-          self.loopPageView.currentPage = self.currentIndex
+            self.loopPageView.normalColor = self.normalColor
+            self.loopPageView.selectColor = self.selectColor
+            self.loopPageView.directionType = self.directionType
+            self.loopPageView.pageMargin = self.pageMargin
+            self.loopPageView.height = self.pointHeight
+            self.loopPageView.selectWidth = self.selectWidth
+            self.loopPageView.currentPage = self.currentIndex
             return
         }
         self.addSubview(self.pageView)
