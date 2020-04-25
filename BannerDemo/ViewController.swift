@@ -80,6 +80,7 @@ extension ViewController {
         bannerView.pageControl?.pointHeight = 8
         bannerView.pageControl?.selectColor = .white
         bannerView.pageControl?.normalColor = .blue
+        bannerView.pageControl?.directionType = .leftDirection
         bannerView.isZoom = false
         bannerView.imgCornerRadius = 10
         bannerView.itemWidth = 360
