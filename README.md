@@ -4,7 +4,7 @@
 
 目前刚完成网络图片、本地图片、gif图片部分；视频播放正在进行中
 
-#示例
+## 示例
 ![bannerExample](https://github.com/zhangyqyx/bannerView/blob/master/bannerExample.gif)
 
-#使用
+## 使用
