@@ -270,11 +270,11 @@ class PageControl: UIPageControl {
             for (index ,view) in self.pageView.subviews.enumerated() {
                 if self.pageType == .hollow {
                    let cycleView = view as!  CyclesView
-                   cycleView.backgroundColor = .clear
                    cycleView.fullColor = self.normalColor
                    if index == self.currentIndex {
                        cycleView.fullColor = self.selectColor
                     }
+                    cycleView.setNeedsDisplay()
                     continue
                 }
                 view.backgroundColor = self.normalColor
