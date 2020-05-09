@@ -9,9 +9,14 @@
 import UIKit
 
 enum BannerImageInfoType:String {
-    case bannerImageInfoTypeLocality = "bannerImageInfoTypeLocality" /// 本地图片
-    case bannerImageInfoTypeNetIamge = "bannerImageInfoTypeNetIamge" /// 网络图片
-    case bannerImageInfoTypeGIFImage = "bannerImageInfoTypeGIFImage" /// 网络GIF图片
+    /// 本地图片
+    case bannerImageInfoTypeLocality = "bannerImageInfoTypeLocality"
+    /// 网络图片
+    case bannerImageInfoTypeNetIamge = "bannerImageInfoTypeNetIamge"
+    /// 网络GIF图片
+    case bannerImageInfoTypeGIFImage = "bannerImageInfoTypeGIFImage"
+    /// 视频
+    case bannerImageWithVideo = "bannerImageWithVideo"
 }
 
 class BannerBaseDataInfo: NSObject {
@@ -35,6 +40,15 @@ class BannerBaseDataInfo: NSObject {
                     return
                 }
                 self.type = .bannerImageInfoTypeNetIamge
+                break
+            case .bannerViewImageWithVideo:
+                 let url = URL(string: newValue!)
+                 if ZYPlayerTool.playerHaveTracksWithURL(url!) {
+                    self.image = ZYPlayerTool.playerFristImageWithURL(url!)
+                    self.type = .bannerImageWithVideo
+                    return
+                 }
+                 self.type = .bannerImageInfoTypeNetIamge
                 break
             case .bannerViewImageTypeLocality:
                 self.type = .bannerImageInfoTypeLocality

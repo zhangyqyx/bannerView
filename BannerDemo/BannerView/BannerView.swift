@@ -23,6 +23,9 @@ enum BannerViewImageType:String {
     case bannerViewImageTypeNetIamge = "bannerViewImageTypeNetIamge"
     /// 网络GIF图片
     case bannerViewImageTypeGIFImage = "bannerViewImageTypeGIFImage"
+    /// 网络图片和视频
+    case bannerViewImageWithVideo = "bannerViewImageWithVideo"
+    
 }
 
 enum BannerViewRollDirectionType:String {
@@ -122,7 +125,7 @@ extension BannerView {
         self.itemWidth = self.bounds.width
         let bundlePath = Bundle.main.path(forResource: "BannerView", ofType: "bundle")
         let bundle = Bundle.init(path: bundlePath!)
-       let imageStr =  bundle?.path(forResource: "normalBannerIcon", ofType: "jpg")
+        let imageStr =  bundle?.path(forResource: "normalBannerIcon", ofType: "jpg")
         guard let imageName = imageStr else {
             return
         }
@@ -140,6 +143,7 @@ extension BannerView {
         collectionView.dataSource = self
         collectionView.scrollsToTop = false
         collectionView.register(BannerViewCell.self, forCellWithReuseIdentifier: "kBannerViewCell")
+        collectionView.register(BannerVideoViewCell.self, forCellWithReuseIdentifier: "kBannerVideoViewCell")
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = self.backgroundColor
@@ -179,6 +183,11 @@ extension BannerView {
             infoModel.bannerImageType = self.imageType
             infoModel.imageUrl = imageStr
             self.bannerDatas.append(infoModel)
+        }
+        if self.imageType == .bannerViewImageWithVideo {
+            self.autoScroll = false
+            self.isZoom = false
+            self.infiniteLoop = false
         }
         DispatchQueue.main.async {
             if  self.bannerDatas.count > 1 {
@@ -262,6 +271,16 @@ extension BannerView {
         self.collectionView?.scrollToItem(at: IndexPath(row: targeIndex, section: 0), at: .centeredHorizontally, animated: true)
         
     }
+    private func stopVideo(index:Int) {
+        if self.dragIndex == 0 {
+            return
+        }
+        let cell = self.collectionView?.cellForItem(at: IndexPath(row: index, section: 0))
+        if cell?.isKind(of: BannerVideoViewCell.self) ?? false {
+           let videoCell = cell as! BannerVideoViewCell
+           videoCell.pauseVideo()
+       }
+    }
 }
 //MARK: UIScrollViewDelegate 滚动代理
 extension BannerView {
@@ -305,12 +324,31 @@ extension BannerView {
              self.dragIndex = 0
         }
         let scrolleIndex = (self.lastX + (self.itemWidth + self.itemSpace) * 0.5) / (self.itemWidth + self.itemSpace)
-        self.collectionView?.scrollToItem(at: IndexPath(row: Int(scrolleIndex) + self.dragIndex, section: 0), at: .centeredHorizontally, animated: true)
+        var scrollRow = Int(scrolleIndex) + self.dragIndex
+        if scrollRow >= self.nums  || scrollRow < 0{
+            scrollRow = 0
+            if self.imageType == .bannerViewImageWithVideo {
+                return
+            }
+        }
+        if self.imageType == .bannerViewImageWithVideo {
+            stopVideo(index: Int(scrolleIndex))
+        }
+        
+        self.collectionView?.scrollToItem(at: IndexPath(row: scrollRow, section: 0), at: .centeredHorizontally, animated: true)
     }
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
          let scrolleIndex = (self.lastX + (self.itemWidth + self.itemSpace) * 0.5) / (self.itemWidth + self.itemSpace)
-        self.collectionView?.scrollToItem(at: IndexPath(row: Int(scrolleIndex) + self.dragIndex, section: 0), at: .centeredHorizontally, animated: true)
+        var scrollRow = Int(scrolleIndex) + self.dragIndex
+        if scrollRow >= self.nums || scrollRow < 0 {
+            scrollRow = 0
+            if self.imageType == .bannerViewImageWithVideo {
+                return
+            }
+        }
+        self.collectionView?.scrollToItem(at: IndexPath(row: scrollRow, section: 0), at: .centeredHorizontally, animated: true)
     }
+    
 }
 
 //MARK: 代理
@@ -320,13 +358,20 @@ extension BannerView:UICollectionViewDelegate , UICollectionViewDataSource {
         return self.nums
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+         let itemIndex = indexPath.row % self.bannerDatas.count
+        let infoModel = self.bannerDatas[itemIndex]
+        if infoModel.type == .bannerImageWithVideo {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kBannerVideoViewCell", for: indexPath) as! BannerVideoViewCell
+            cell.playerView?.coverImageView?.image = infoModel.image
+            cell.infoModel = infoModel
+            return cell
+        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kBannerViewCell", for: indexPath) as! BannerViewCell
-        let itemIndex = indexPath.row % self.bannerDatas.count
         cell.isClips = self.isClips
         cell.placeholderImage = self.placeholderImage
         cell.imgCornerRadius = self.imgCornerRadius
         cell.imageContentMode = self.imageViewContentMode
-        cell.infoModel = self.bannerDatas[itemIndex]
+        cell.infoModel = infoModel
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

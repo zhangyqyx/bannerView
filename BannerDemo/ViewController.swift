@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     private var tableView:UITableView?
     private let kTableViewCell = "kTableViewCell"
+    private var bannerView:BannerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +29,26 @@ extension ViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.backgroundColor = .white
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: kTableViewCell)
         self.view.addSubview(tableView)
         self.tableView = tableView
     }
+    
     private func setupBanner1() -> BannerView {
+        if self.bannerView != nil {
+            return self.bannerView!
+        }
+           let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
+           bannerView.pageControl?.directionType = .rightDirection
+           bannerView.imageType = .bannerViewImageWithVideo
+           bannerView.imageDatas = ["http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4",
+           "https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
+            "https://img.ivsky.com/img/tupian/t/201911/09/ciwei.jpg"]
+           self.bannerView = bannerView
+           return bannerView
+    }
+    private func setupBanner2() -> BannerView {
         let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
         bannerView.imageDatas = ["https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
         "WechatIMG105",
@@ -42,7 +57,7 @@ extension ViewController {
         return bannerView
     }
     
-    private func setupBanner2() -> BannerView {
+    private func setupBanner3() -> BannerView {
         let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
         bannerView.pageControl?.directionType = .rightDirection
         bannerView.pageControl?.pageType = .hollow
@@ -57,7 +72,7 @@ extension ViewController {
          "http://www.nbyh.info/uploadfiles/day_180315/201803151133523433.gif"]
         return bannerView
     }
-    private func setupBanner3() -> BannerView {
+    private func setupBanner4() -> BannerView {
         let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
         bannerView.pageControl?.pageType = .circle
         bannerView.pageControl?.pointHeight = 8
@@ -74,7 +89,7 @@ extension ViewController {
         return bannerView
     }
     
-    private func setupBanner4() -> BannerView {
+    private func setupBanner5() -> BannerView {
         let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
         bannerView.pageControl?.pageType = .rectangle
         bannerView.pageControl?.pointHeight = 8
@@ -99,13 +114,13 @@ extension ViewController {
 extension ViewController:UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: kTableViewCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if  indexPath.section == 0 {
             cell.contentView.addSubview(setupBanner1())
         }
@@ -117,6 +132,9 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
         }
         if  indexPath.section == 3 {
             cell.contentView.addSubview(setupBanner4())
+        }
+        if  indexPath.section == 4 {
+            cell.contentView.addSubview(setupBanner5())
         }
         
         return cell

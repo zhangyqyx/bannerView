@@ -21,6 +21,11 @@
 		F74FA4332452F3EF00423015 /* BannerViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74FA4322452F3EF00423015 /* BannerViewFlowLayout.swift */; };
 		F74FA4352452F9F300423015 /* BannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74FA4342452F9F300423015 /* BannerViewCell.swift */; };
 		F74FA4372453015300423015 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74FA4362453015300423015 /* BannerView.swift */; };
+		F76EB5B3246566E70039C5AC /* ZYPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76EB5AF246566E70039C5AC /* ZYPlayer.swift */; };
+		F76EB5B4246566E70039C5AC /* ZYPlayerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76EB5B0246566E70039C5AC /* ZYPlayerTool.swift */; };
+		F76EB5B5246566E70039C5AC /* PlayerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F76EB5B1246566E70039C5AC /* PlayerView.bundle */; };
+		F76EB5B6246566E70039C5AC /* ZYPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76EB5B2246566E70039C5AC /* ZYPlayerView.swift */; };
+		F76EB5B8246637440039C5AC /* BannerVideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76EB5B7246637440039C5AC /* BannerVideoViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 		F74FA4322452F3EF00423015 /* BannerViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewFlowLayout.swift; sourceTree = "<group>"; };
 		F74FA4342452F9F300423015 /* BannerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewCell.swift; sourceTree = "<group>"; };
 		F74FA4362453015300423015 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		F76EB5AF246566E70039C5AC /* ZYPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZYPlayer.swift; sourceTree = "<group>"; };
+		F76EB5B0246566E70039C5AC /* ZYPlayerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZYPlayerTool.swift; sourceTree = "<group>"; };
+		F76EB5B1246566E70039C5AC /* PlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PlayerView.bundle; sourceTree = "<group>"; };
+		F76EB5B2246566E70039C5AC /* ZYPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZYPlayerView.swift; sourceTree = "<group>"; };
+		F76EB5B7246637440039C5AC /* BannerVideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerVideoViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +105,7 @@
 		F7492CD02443FE2000276989 /* BannerView */ = {
 			isa = PBXGroup;
 			children = (
+				F76EB5AD246566E70039C5AC /* ZYPlayerView */,
 				F74FA42D2452D02400423015 /* BannerView.bundle */,
 				F74FA42F2452ED2600423015 /* Model */,
 				F7182457244464210092F060 /* pageControl */,
@@ -103,6 +114,7 @@
 				F74FA4362453015300423015 /* BannerView.swift */,
 				F74FA4322452F3EF00423015 /* BannerViewFlowLayout.swift */,
 				F74FA4342452F9F300423015 /* BannerViewCell.swift */,
+				F76EB5B7246637440039C5AC /* BannerVideoViewCell.swift */,
 			);
 			path = BannerView;
 			sourceTree = "<group>";
@@ -113,6 +125,25 @@
 				F74FA4302452ED4100423015 /* BannerBaseDataInfo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		F76EB5AD246566E70039C5AC /* ZYPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				F76EB5AE246566E70039C5AC /* ZYPlayer */,
+				F76EB5B1246566E70039C5AC /* PlayerView.bundle */,
+				F76EB5B2246566E70039C5AC /* ZYPlayerView.swift */,
+			);
+			path = ZYPlayerView;
+			sourceTree = "<group>";
+		};
+		F76EB5AE246566E70039C5AC /* ZYPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				F76EB5AF246566E70039C5AC /* ZYPlayer.swift */,
+				F76EB5B0246566E70039C5AC /* ZYPlayerTool.swift */,
+			);
+			path = ZYPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +207,7 @@
 				F7492CC92443FBBE00276989 /* LaunchScreen.storyboard in Resources */,
 				F7492CC62443FBBE00276989 /* Assets.xcassets in Resources */,
 				F74FA42E2452D02400423015 /* BannerView.bundle in Resources */,
+				F76EB5B5246566E70039C5AC /* PlayerView.bundle in Resources */,
 				F7492CC42443FBBA00276989 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,12 +222,16 @@
 				F74FA4372453015300423015 /* BannerView.swift in Sources */,
 				F7492CC12443FBBA00276989 /* ViewController.swift in Sources */,
 				F718245C244588D30092F060 /* BannerTool.swift in Sources */,
+				F76EB5B4246566E70039C5AC /* ZYPlayerTool.swift in Sources */,
 				F7492CD424445CA300276989 /* CyclesView.swift in Sources */,
 				F74FA4312452ED4100423015 /* BannerBaseDataInfo.swift in Sources */,
+				F76EB5B8246637440039C5AC /* BannerVideoViewCell.swift in Sources */,
 				F74FA4332452F3EF00423015 /* BannerViewFlowLayout.swift in Sources */,
 				F7492CBD2443FBBA00276989 /* AppDelegate.swift in Sources */,
 				F718245A244546ED0092F060 /* LoadImageView.swift in Sources */,
 				F7492CD22443FE2C00276989 /* PageControl.swift in Sources */,
+				F76EB5B3246566E70039C5AC /* ZYPlayer.swift in Sources */,
+				F76EB5B6246566E70039C5AC /* ZYPlayerView.swift in Sources */,
 				F74FA4352452F9F300423015 /* BannerViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
