@@ -174,17 +174,19 @@ extension ZYPlayerView {
        self.coverImageView?.isHidden = false
        self.playOrPauseBtn?.isSelected = false
        self.playScheduleSlider?.value = 0.0
+       self.playStopped()
         self.leftTimeLabel?.text = ZYPlayerTool.playerConvertTime(0.0)
        if self.bottomView?.alpha == 0.0 {
          self.showControlView()
        }
     }
-    private func playStopped() {
+    func playStopped() {
         self.loadingView?.stopAnimating()
         self.loadingView?.isHidden = true
         self.coverImageView?.isHidden = false
         self.playOrPauseBtn?.isSelected = false
         self.playScheduleSlider?.value = 0.0
+        self.player?.playStop()
         if self.bottomView?.alpha == 0.0 {
           self.showControlView()
         }

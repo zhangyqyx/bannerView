@@ -36,8 +36,8 @@ class BannerVideoViewCell: UICollectionViewCell {
         self.playerView = playerView
         self.contentView.addSubview(playerView)
       }
-     func pauseVideo() {
-        self.playerView?.pausePlay()
+     func stopVideo() {
+        self.playerView?.playStopped()
      }
     
     

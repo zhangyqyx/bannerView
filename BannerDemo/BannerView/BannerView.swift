@@ -278,7 +278,7 @@ extension BannerView {
         let cell = self.collectionView?.cellForItem(at: IndexPath(row: index, section: 0))
         if cell?.isKind(of: BannerVideoViewCell.self) ?? false {
            let videoCell = cell as! BannerVideoViewCell
-           videoCell.pauseVideo()
+           videoCell.stopVideo()
        }
     }
 }

@@ -92,6 +92,7 @@ class ZYPlayer: NSObject {
     private var loadComplete:Bool = false
     private var kLoading = false
     private var timeObs:Any?
+    private var isObserver = false
     
     deinit {
         self.releasePlayer()
@@ -142,6 +143,8 @@ class ZYPlayer: NSObject {
             self.current = 0.0
             self.playState = .playStopped
             self.videoPlayer?.pause()
+            self.videoPlayer = nil
+            self.playerItem = nil
             self.releasePlayer()
             if let callBack = self.playProgressCallBack {
                 callBack(self,self.progress,self.current , self.videoTotalTime)
@@ -164,15 +167,20 @@ extension ZYPlayer {
        
    }
    private func releasePlayer() {
+    if isObserver {
         self.playerItem?.removeObserver(self, forKeyPath: "status")
-        self.playerItem?.removeObserver(self, forKeyPath: "loadedTimeRanges")
-        self.playerItem?.removeObserver(self, forKeyPath: "playbackBufferEmpty")
-        self.playerItem?.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
-      self.videoPlayer?.removeTimeObserver(self.timeObs as Any)
-       self.timeObs = nil;
+          self.playerItem?.removeObserver(self, forKeyPath: "loadedTimeRanges")
+          self.playerItem?.removeObserver(self, forKeyPath: "playbackBufferEmpty")
+          self.playerItem?.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
+         self.videoPlayer?.removeTimeObserver(self.timeObs as Any)
+         self.timeObs = nil;
+        self.isObserver = false
+     }
+        
     
    }
     private func setNotificationAndKvo() {
+        self.isObserver = true
         self.playerItem?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
         self.playerItem?.addObserver(self, forKeyPath: "loadedTimeRanges", options: .new, context: nil)
         self.playerItem?.addObserver(self, forKeyPath: "playbackBufferEmpty", options: .new, context: nil)
